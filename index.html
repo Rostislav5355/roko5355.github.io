@@ -2,139 +2,25 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
-  <title>Ovládání PTZ kamery</title>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PTZ Kamera</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 20px;
-    }
-    h1, h2 {
-      color: #333;
-    }
-    .controls {
-      display: grid;
-      grid-template-columns: 100px 100px 100px;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 30px;
-    }
-    .preset-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 120px);
-      gap: 10px;
-      justify-content: center;
-      margin-top: 40px;
-    }
-    button {
-      font-size: 18px;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background-color: #3498db;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    button:hover {
-      background-color: #2980b9;
-    }
-    button.active {
-      background-color: #2ecc71 !important;
-    }
-    .zoom-controls {
-      margin-top: 40px;
-    }
-    #content {
-      display: none;
+      padding-top: 50px;
     }
   </style>
 </head>
 <body>
-  <div id="login">
-    <h2>Zadejte heslo pro přístup</h2>
-    <input type="password" id="passwordInput" placeholder="Heslo" />
-    <br><br>
-    <button onclick="checkPassword()">Přihlásit</button>
-    <p id="error" style="color: red;"></p>
-  </div>
-
-  <div id="content">
-    <h1>Ovládání kamery PTZ</h1>
-
-    <div class="controls">
-      <div></div>
-      <button onclick="sendCommand('up')">⬆ Nahoru</button>
-      <div></div>
-
-      <button onclick="sendCommand('left')">⬅ Vlevo</button>
-      <div></div>
-      <button onclick="sendCommand('right')">➡ Vpravo</button>
-
-      <div></div>
-      <button onclick="sendCommand('down')">⬇ Dolů</button>
-      <div></div>
-    </div>
-
-    <div class="zoom-controls">
-      <button onclick="sendCommand('zoom_in')">🔍 Zoom +</button>
-      <button onclick="sendCommand('zoom_out')">🔎 Zoom -</button>
-    </div>
-
-    <h2>Předvolby pozic</h2>
-    <div class="preset-buttons">
-      <button onclick="selectPreset(this, 'preset_1')">Předvolba 1</button>
-      <button onclick="selectPreset(this, 'preset_2')">Předvolba 2</button>
-      <button onclick="selectPreset(this, 'preset_3')">Předvolba 3</button>
-      <button onclick="selectPreset(this, 'preset_4')">Předvolba 4</button>
-      <button onclick="selectPreset(this, 'preset_5')">Předvolba 5</button>
-      <button onclick="selectPreset(this, 'preset_6')">Předvolba 6</button>
-      <button onclick="selectPreset(this, 'preset_7')">Předvolba 7</button>
-      <button onclick="selectPreset(this, 'preset_8')">Předvolba 8</button>
-      <button onclick="selectPreset(this, 'preset_9')">Předvolba 9</button>
-    </div>
-  </div>
+  <h1>Ovládání PTZ kamery</h1>
+  <p>Pro pokračování je vyžadováno heslo.</p>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCSkbdRtvVsMk3XCCTmiG5dx23x-O39ur8",
-      authDomain: "ptz-control-b716a.firebaseapp.com",
-      databaseURL: "https://ptz-control-b716a-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "ptz-control-b716a",
-      storageBucket: "ptz-control-b716a.firebasestorage.app",
-      messagingSenderId: "967042225056",
-      appId: "1:967042225056:web:155606b7d9acf4fa508ac5"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    function sendCommand(command) {
-      db.ref("ptz_command").set(command)
-        .then(() => console.log("Odesláno:", command))
-        .catch(console.error);
-    }
-
-    function selectPreset(button, command) {
-      document.querySelectorAll('.preset-buttons button').forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      sendCommand(command);
-    }
-
-    const CORRECT_PASSWORD = "123456";
-    function checkPassword() {
-      const entered = document.getElementById("passwordInput").value;
-      if (entered === CORRECT_PASSWORD) {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("content").style.display = "block";
-      } else {
-        document.getElementById("error").textContent = "Nesprávné heslo.";
-      }
-    }
+    const pass = prompt("Zadejte heslo:");
+    // TODO: Porovnání hesla může být implementováno dynamicky přes Firebase nebo server
+    alert("Děkujeme! Ověření hesla zatím není aktivní.");
+    // window.location.href = 'camera.html'; // volitelné přesměrování
   </script>
 </body>
 </html>
