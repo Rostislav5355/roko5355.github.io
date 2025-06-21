@@ -23,9 +23,16 @@
       justify-content: center;
       margin-top: 30px;
     }
+    .preset-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 120px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 40px;
+    }
     button {
-      font-size: 24px;
-      padding: 15px;
+      font-size: 18px;
+      padding: 12px;
       border: none;
       border-radius: 10px;
       background-color: #3498db;
@@ -46,21 +53,34 @@
 
   <div class="controls">
     <div></div>
-    <button onclick="sendCommand('up')">↑</button>
+    <button onclick="sendCommand('up')">⬆ Nahoru</button>
     <div></div>
 
-    <button onclick="sendCommand('left')">←</button>
+    <button onclick="sendCommand('left')">⬅ Vlevo</button>
     <div></div>
-    <button onclick="sendCommand('right')">→</button>
+    <button onclick="sendCommand('right')">➡ Vpravo</button>
 
     <div></div>
-    <button onclick="sendCommand('down')">↓</button>
+    <button onclick="sendCommand('down')">⬇ Dolů</button>
     <div></div>
   </div>
 
   <div class="zoom-controls">
     <button onclick="sendCommand('zoom_in')">🔍 Zoom +</button>
-    <button onclick="sendCommand('zoom_out')">🔎 Zoom −</button>
+    <button onclick="sendCommand('zoom_out')">🔎 Zoom -</button>
+  </div>
+
+  <h2>Předvolby pozic</h2>
+  <div class="preset-buttons">
+    <button onclick="sendCommand('preset_1')">Předvolba 1</button>
+    <button onclick="sendCommand('preset_2')">Předvolba 2</button>
+    <button onclick="sendCommand('preset_3')">Předvolba 3</button>
+    <button onclick="sendCommand('preset_4')">Předvolba 4</button>
+    <button onclick="sendCommand('preset_5')">Předvolba 5</button>
+    <button onclick="sendCommand('preset_6')">Předvolba 6</button>
+    <button onclick="sendCommand('preset_7')">Předvolba 7</button>
+    <button onclick="sendCommand('preset_8')">Předvolba 8</button>
+    <button onclick="sendCommand('preset_9')">Předvolba 9</button>
   </div>
 
   <script>
@@ -85,4 +105,3 @@
   </script>
 </body>
 </html>
-
