@@ -13,7 +13,7 @@
       margin: 0;
       padding: 20px;
     }
-    h1 {
+    h1, h2 {
       color: #333;
     }
     .controls {
@@ -43,44 +43,60 @@
     button:hover {
       background-color: #2980b9;
     }
+    button.active {
+      background-color: #2ecc71 !important;
+    }
     .zoom-controls {
       margin-top: 40px;
+    }
+    #content {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>Ovládání kamery PTZ</h1>
-
-  <div class="controls">
-    <div></div>
-    <button onclick="sendCommand('up')">⬆ Nahoru</button>
-    <div></div>
-
-    <button onclick="sendCommand('left')">⬅ Vlevo</button>
-    <div></div>
-    <button onclick="sendCommand('right')">➡ Vpravo</button>
-
-    <div></div>
-    <button onclick="sendCommand('down')">⬇ Dolů</button>
-    <div></div>
+  <div id="login">
+    <h2>Zadejte heslo pro přístup</h2>
+    <input type="password" id="passwordInput" placeholder="Heslo" />
+    <br><br>
+    <button onclick="checkPassword()">Přihlásit</button>
+    <p id="error" style="color: red;"></p>
   </div>
 
-  <div class="zoom-controls">
-    <button onclick="sendCommand('zoom_in')">🔍 Zoom +</button>
-    <button onclick="sendCommand('zoom_out')">🔎 Zoom -</button>
-  </div>
+  <div id="content">
+    <h1>Ovládání kamery PTZ</h1>
 
-  <h2>Předvolby pozic</h2>
-  <div class="preset-buttons">
-    <button onclick="sendCommand('preset_1')">Předvolba 1</button>
-    <button onclick="sendCommand('preset_2')">Předvolba 2</button>
-    <button onclick="sendCommand('preset_3')">Předvolba 3</button>
-    <button onclick="sendCommand('preset_4')">Předvolba 4</button>
-    <button onclick="sendCommand('preset_5')">Předvolba 5</button>
-    <button onclick="sendCommand('preset_6')">Předvolba 6</button>
-    <button onclick="sendCommand('preset_7')">Předvolba 7</button>
-    <button onclick="sendCommand('preset_8')">Předvolba 8</button>
-    <button onclick="sendCommand('preset_9')">Předvolba 9</button>
+    <div class="controls">
+      <div></div>
+      <button onclick="sendCommand('up')">⬆ Nahoru</button>
+      <div></div>
+
+      <button onclick="sendCommand('left')">⬅ Vlevo</button>
+      <div></div>
+      <button onclick="sendCommand('right')">➡ Vpravo</button>
+
+      <div></div>
+      <button onclick="sendCommand('down')">⬇ Dolů</button>
+      <div></div>
+    </div>
+
+    <div class="zoom-controls">
+      <button onclick="sendCommand('zoom_in')">🔍 Zoom +</button>
+      <button onclick="sendCommand('zoom_out')">🔎 Zoom -</button>
+    </div>
+
+    <h2>Předvolby pozic</h2>
+    <div class="preset-buttons">
+      <button onclick="selectPreset(this, 'preset_1')">Předvolba 1</button>
+      <button onclick="selectPreset(this, 'preset_2')">Předvolba 2</button>
+      <button onclick="selectPreset(this, 'preset_3')">Předvolba 3</button>
+      <button onclick="selectPreset(this, 'preset_4')">Předvolba 4</button>
+      <button onclick="selectPreset(this, 'preset_5')">Předvolba 5</button>
+      <button onclick="selectPreset(this, 'preset_6')">Předvolba 6</button>
+      <button onclick="selectPreset(this, 'preset_7')">Předvolba 7</button>
+      <button onclick="selectPreset(this, 'preset_8')">Předvolba 8</button>
+      <button onclick="selectPreset(this, 'preset_9')">Předvolba 9</button>
+    </div>
   </div>
 
   <script>
@@ -101,6 +117,23 @@
       db.ref("ptz_command").set(command)
         .then(() => console.log("Odesláno:", command))
         .catch(console.error);
+    }
+
+    function selectPreset(button, command) {
+      document.querySelectorAll('.preset-buttons button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      sendCommand(command);
+    }
+
+    const CORRECT_PASSWORD = "7gFr!x9Z";
+    function checkPassword() {
+      const entered = document.getElementById("passwordInput").value;
+      if (entered === CORRECT_PASSWORD) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      } else {
+        document.getElementById("error").textContent = "Nesprávné heslo.";
+      }
     }
   </script>
 </body>
