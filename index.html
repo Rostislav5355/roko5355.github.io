@@ -39,6 +39,12 @@
       color: white;
       cursor: pointer;
       transition: background-color 0.2s;
+      width: 100px;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     button:hover {
       background-color: #2980b9;
@@ -53,21 +59,29 @@
 
   <div class="controls">
     <div></div>
-    <button onclick="sendCommand('up')">⬆ Nahoru</button>
+    <button onclick="sendCommand('up')">
+      ⬆<br><small>Nahoru</small>
+    </button>
     <div></div>
 
-    <button onclick="sendCommand('left')">⬅ Vlevo</button>
+    <button onclick="sendCommand('left')">
+      ⬅<br><small>Vlevo</small>
+    </button>
     <div></div>
-    <button onclick="sendCommand('right')">➡ Vpravo</button>
+    <button onclick="sendCommand('right')">
+      ➡<br><small>Vpravo</small>
+    </button>
 
     <div></div>
-    <button onclick="sendCommand('down')">⬇ Dolů</button>
+    <button onclick="sendCommand('down')">
+      ⬇<br><small>Dolů</small>
+    </button>
     <div></div>
   </div>
 
   <div class="zoom-controls">
-    <button onclick="sendCommand('zoom_in')">🔍 Zoom +</button>
-    <button onclick="sendCommand('zoom_out')">🔎 Zoom -</button>
+    <button onclick="sendCommand('zoom_in')">🔍<br><small>Zoom +</small></button>
+    <button onclick="sendCommand('zoom_out')">🔎<br><small>Zoom -</small></button>
   </div>
 
   <h2>Předvolby pozic</h2>
@@ -105,4 +119,3 @@
   </script>
 </body>
 </html>
-
