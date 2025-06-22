@@ -58,6 +58,8 @@
   </style>
 </head>
 <body>
+
+  <!-- Obsah se skryje do ověření -->
   <div id="content" style="display:none;">
     <h1>Ovládání kamery PTZ</h1>
 
@@ -95,6 +97,7 @@
   </div>
 
   <script>
+    // Firebase konfigurace
     const firebaseConfig = {
       apiKey: "AIzaSyCSkbdRtvVsMk3XCCTmiG5dx23x-O39ur8",
       authDomain: "ptz-control-b716a.firebaseapp.com",
@@ -114,16 +117,18 @@
         .catch(console.error);
     }
 
-    // ✅ Ověření tokenu
+    // Ověření tokenu z URL
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
 
     db.ref("auth_token").once("value").then(snapshot => {
       const validToken = snapshot.val();
+
       if (token === validToken) {
         document.getElementById("content").style.display = "block";
+        db.ref("auth_token").remove(); // ✅ smaže po použití
       } else {
-        document.body.innerHTML = "<h2>❌ Neplatné heslo nebo odkaz</h2>";
+        document.body.innerHTML = "<h2>❌ Neplatné nebo již použité heslo</h2>";
       }
     });
   </script>
