@@ -58,38 +58,40 @@
   </style>
 </head>
 <body>
-  <h1>Ovládání kamery PTZ</h1>
+  <div id="content" style="display:none;">
+    <h1>Ovládání kamery PTZ</h1>
 
-  <div class="controls">
-    <div></div>
-    <button onclick="sendCommand('up')">⬆<br><small>Nahoru</small></button>
-    <div></div>
+    <div class="controls">
+      <div></div>
+      <button onclick="sendCommand('up')">⬆<br><small>Nahoru</small></button>
+      <div></div>
 
-    <button onclick="sendCommand('left')">⬅<br><small>Vlevo</small></button>
-    <div></div>
-    <button onclick="sendCommand('right')">➡<br><small>Vpravo</small></button>
+      <button onclick="sendCommand('left')">⬅<br><small>Vlevo</small></button>
+      <div></div>
+      <button onclick="sendCommand('right')">➡<br><small>Vpravo</small></button>
 
-    <div></div>
-    <button onclick="sendCommand('down')">⬇<br><small>Dolů</small></button>
-    <div></div>
-  </div>
+      <div></div>
+      <button onclick="sendCommand('down')">⬇<br><small>Dolů</small></button>
+      <div></div>
+    </div>
 
-  <div class="zoom-controls">
-    <button onclick="sendCommand('zoom_in')">🔍<br><small>Zoom +</small></button>
-    <button onclick="sendCommand('zoom_out')">🔎<br><small>Zoom -</small></button>
-  </div>
+    <div class="zoom-controls">
+      <button onclick="sendCommand('zoom_in')">🔍<br><small>Zoom +</small></button>
+      <button onclick="sendCommand('zoom_out')">🔎<br><small>Zoom -</small></button>
+    </div>
 
-  <h2>Předvolby pozic</h2>
-  <div class="preset-buttons">
-    <button onclick="sendCommand('preset_1')">Předvolba 1</button>
-    <button onclick="sendCommand('preset_2')">Předvolba 2</button>
-    <button onclick="sendCommand('preset_3')">Předvolba 3</button>
-    <button onclick="sendCommand('preset_4')">Předvolba 4</button>
-    <button onclick="sendCommand('preset_5')">Předvolba 5</button>
-    <button onclick="sendCommand('preset_6')">Předvolba 6</button>
-    <button onclick="sendCommand('preset_7')">Předvolba 7</button>
-    <button onclick="sendCommand('preset_8')">Předvolba 8</button>
-    <button onclick="sendCommand('preset_9')">Předvolba 9</button>
+    <h2>Předvolby pozic</h2>
+    <div class="preset-buttons">
+      <button onclick="sendCommand('preset_1')">Předvolba 1</button>
+      <button onclick="sendCommand('preset_2')">Předvolba 2</button>
+      <button onclick="sendCommand('preset_3')">Předvolba 3</button>
+      <button onclick="sendCommand('preset_4')">Předvolba 4</button>
+      <button onclick="sendCommand('preset_5')">Předvolba 5</button>
+      <button onclick="sendCommand('preset_6')">Předvolba 6</button>
+      <button onclick="sendCommand('preset_7')">Předvolba 7</button>
+      <button onclick="sendCommand('preset_8')">Předvolba 8</button>
+      <button onclick="sendCommand('preset_9')">Předvolba 9</button>
+    </div>
   </div>
 
   <script>
@@ -111,6 +113,19 @@
         .then(() => console.log("Odesláno:", command))
         .catch(console.error);
     }
+
+    // ✅ Ověření tokenu
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    db.ref("auth_token").once("value").then(snapshot => {
+      const validToken = snapshot.val();
+      if (token === validToken) {
+        document.getElementById("content").style.display = "block";
+      } else {
+        document.body.innerHTML = "<h2>❌ Neplatné heslo nebo odkaz</h2>";
+      }
+    });
   </script>
 </body>
 </html>
